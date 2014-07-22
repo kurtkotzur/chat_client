@@ -1,0 +1,47 @@
+<html>
+  <head>
+    
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./javascripts/chat.js"></script>
+
+    <script src="./javascripts/chat_ui.js"></script>
+    <script type="text/javascript">
+      clientSide.socket.on("fromNodeEvent", function (data) {
+        clientSide.postMessage(data.message);
+      });
+      
+      $(document).ready(function(){
+        $("form").on("submit", function (event) {
+          event.preventDefault();
+          clientSide.sendMessage(clientSide.getMessage());
+        });
+      });
+    </script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <h1> Chat </h1>
+          <form id="chat-box-form" class="form">
+            <div class="form-group">
+              <textarea class="form-control" name="message"></textarea>
+            </div>
+
+            <button class="btn btn-primary">Send</button>
+          </form>
+        </div>
+        <div class="col-md-5">
+          <h1> Messages </ul>
+          <ul id="log">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

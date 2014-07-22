@@ -7,23 +7,33 @@
     
     <script src="/socket.io/socket.io.js"></script>
     <script src="./javascripts/chat.js"></script>
-
     <script src="./javascripts/chat_ui.js"></script>
+    
     <script type="text/javascript">
       clientSide.socket.on("fromNodeEvent", function (data) {
         clientSide.postMessage(data.message);
       });
+      
       
       $(document).ready(function(){
         $("form").on("submit", function (event) {
           event.preventDefault();
           clientSide.sendMessage(clientSide.getMessage());
         });
+        
+        clientSide.socket.on("nicknameChangeResult", function (data) {
+          if (!data.success) {
+            alert(data.message);
+          } else {
+            $(".nickname").text(data.message);
+          }
+        });
       });
     </script>
   </head>
   
   <body>
+    <div class="nickname"></div>
     <div class="container">
       <div class="row">
         <div class="col-md-5">
@@ -37,7 +47,7 @@
           </form>
         </div>
         <div class="col-md-5">
-          <h1> Messages </ul>
+          <h1> Messages </h1>
           <ul id="log">
           </ul>
         </div>

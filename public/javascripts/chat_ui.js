@@ -7,7 +7,12 @@
   
   var getMessage = clientSide.getMessage = function(){
     var data = $("textarea").val();
-    return data;
+    
+    if(data[0] === "/"){
+      chat.processCommand(data);
+    } else {
+      return data;
+    }
   };
   
   var sendMessage = clientSide.sendMessage = function(message){
@@ -15,10 +20,10 @@
   };
   
   var postMessage = clientSide.postMessage = function(message){
-    var $li = $("<li>");
-    $li.text(message);
+    var $p = $("<p>");
+    $p.text(message);
     
-    $("#log").append($li);
+    $("#log").append($p);
   };
   
 })(this)

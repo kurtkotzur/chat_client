@@ -10,12 +10,11 @@
     <script src="./javascripts/chat_ui.js"></script>
     
     <script type="text/javascript">
-      clientSide.socket.on("fromNodeEvent", function (data) {
-        clientSide.postMessage(data.message);
-      });
-      
-      
       $(document).ready(function(){
+        clientSide.socket.on("fromNodeEvent", function (data) {
+          clientSide.postMessage(data.message);
+        });
+        
         $("form").on("submit", function (event) {
           event.preventDefault();
           clientSide.sendMessage(clientSide.getMessage());
@@ -28,12 +27,20 @@
             $(".nickname").text(data.message);
           }
         });
+
+        clientSide.socket.on("roomSet", function (data) {
+          $(".room").text(data.room);
+        });
+
+        
       });
     </script>
   </head>
   
   <body>
     <div class="nickname"></div>
+    <div class="room"></div>
+    
     <div class="container">
       <div class="row">
         <div class="col-md-5">
